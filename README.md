@@ -1,44 +1,71 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Monoprice Multizone Amp WebApp Interface
 
-## Available Scripts
+This is a React JS app written in TypeScript that provides a web-based interface to control the [six channel multi-zone amplifier from Monoprice](https://www.monoprice.com/product?p_id=10761) via a JSON API on a [Raspberry Pi](https://amzn.to/2Xk58og).
 
-In the project directory, you can run:
+This project provides just the web application.  You will need to have the JSON API project running already before you use this application.  You can get more information about that API [via this walk-through](https://chrisschuld.com/2019/07/decorating-the-monoprice-6-zone-home-audio-multizone-controller/) (API is hosted via github here - [https://github.com/jnewland/mpr-6zhmaut-api](https://github.com/jnewland/mpr-6zhmaut-api)).
 
-### `npm start`
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+<img src="https://s3-us-west-2.amazonaws.com/chrisschuld.com/images/iphone-render-house-audio.png" style="width:400px;"/>
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+## What do I need?
 
-### `npm test`
+You need the following things for this app to work:
++ The [six channel multi-zone amplifier from Monoprice](https://www.monoprice.com/product?p_id=10761)
++ Serial cable to USB-A - this one works GREAT *(and this can be tricky to get one with correct functionality)*: [USB 2.0 to RS232 DB9 Serial Cable Male A Converter Adapter with PL2303 Chipset](https://amzn.to/2ypmceB)
++ Raspberry pi or a [Raspberry Pi Starter Kit - everything you need](https://amzn.to/33cXPz4)
++ Jesse Newland's API - [via this walk-through](https://chrisschuld.com/2019/07/decorating-the-monoprice-6-zone-home-audio-multizone-controller/)
++ This WebApp (keep reading...)
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Installing and Using the Web App
 
-### `npm run build`
+### Clone the Repo
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+To get started you need to put the TypeScript React app on your local machine (or on the raspberry pi).  Also, you need to make sure you have the latest version of `npm` installed on your machine.
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+*notes: move your change directory to your project directly*
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+cd /projects
+git clone https://github.com/cbschuld/monoprice-multizone-interface.git
+cd monoprice-multizone-interface
+npm install
+```
 
-### `npm run eject`
+### Adjust the Environment
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+There is file in the root path called `env.tsx`.  You will need to adjust this file to match your amplifier/controller setup before you go to the next step.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Build the App
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Now that your environment is updated you can build the App to get ready to ship it to the Raspberry Pi (where your API is located most likely).  Staying on the same machine run the following.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```bash
+npm build
+```
 
-## Learn More
+### Raspberry Pi - Installing the React App
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Next, on the Raspberry Pi run the following commands to install nginx
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```bash
+sudo apt-get update
+sudo apt-get install nginx
+sudo chown -R pi:root /var/www/html
+```
+
+Wherever you ran the `npm build` command you will now see a `build` directory.  Copy that directory to the `/var/www/html` path on the Raspberry Pi.  In my case I built it on my local development machine and just used `scp` to copy the build directoy to the Pi.  *(Note: my Raspberry Pi is located at 10.0.0.82)*
+
+```bash
+cd /projects/monoprice-multizone-interface
+scp -r * pi@10.0.0.82:/var/www/html/
+```
+
+### View the App
+
+That is all it takes to use this application; if you point your browser to the IP address of the Raspberry Pi you'll see the App!
+
+## Contributions
+
+* fork
+* create a feature branch
+* open a Pull Request
