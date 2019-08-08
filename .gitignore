@@ -72,4 +72,4 @@ yarn-error.log*
 # private info
 /public/env.js
 
-/src/env.tsx
+src/env.tsx
