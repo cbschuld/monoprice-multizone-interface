@@ -10,6 +10,8 @@ interface ZoneListInputProps {
     infoList: Array<ZoneInformation>
     statusList: Array<ZoneStatus>
     onVolumeChange: (zone: string, volume: SliderValue) => void
+    onBassChange: (zone: string, bass: SliderValue) => void
+    onTrebleChange: (zone: string, treble: SliderValue) => void
     onPowerChange: (zone: string, on: boolean) => void
     onSourceChange: (zone: string, source: string) => void
 }
