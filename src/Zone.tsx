@@ -13,13 +13,15 @@ interface ZoneInputProps {
     info: ZoneInformation
     status: ZoneStatus
     onVolumeChange: (zone: string, volume: SliderValue) => void
+    onBassChange: (zone: string, bass: SliderValue) => void
+    onTrebleChange: (zone: string, treble: SliderValue) => void
     onPowerChange: (zone: string, on: boolean) => void
     onSourceChange: (zone: string, source: number) => void
 }
 
 const { Option } = Select;
 
-export const Zone: React.FC<ZoneInputProps> = ({ info, status, onVolumeChange, onPowerChange, onSourceChange }) => {
+export const Zone: React.FC<ZoneInputProps> = ({ info, status, onVolumeChange, onBassChange, onTrebleChange,  onPowerChange, onSourceChange }) => {
     return (
         <Fragment>
             <Row>
@@ -70,6 +72,38 @@ export const Zone: React.FC<ZoneInputProps> = ({ info, status, onVolumeChange, o
                                             max={38}
                                             onChange={(vo: SliderValue) => onVolumeChange(info.zone, vo)}
                                             value={parseInt(status.vo)}
+                                        />
+                                    </Col>
+                                </Row>
+                            </Card>
+                        </Col>
+                    </Row>
+                    <Row style={{ paddingTop: 10 }}>
+                        <Col span={24}>
+                            <Card size="small" title="Bass" extra={<FontAwesomeIcon icon={faVolumeUp}/>}>
+                                <Row>
+                                    <Col span={24}>
+                                        <Slider
+                                            min={0}
+                                            max={14}
+                                            onChange={(bs: SliderValue) => onBassChange(info.zone, bs)}
+                                            value={parseInt(status.bs)}
+                                        />
+                                    </Col>
+                                </Row>
+                            </Card>
+                        </Col>
+                    </Row>
+                    <Row style={{ paddingTop: 10 }}>
+                        <Col span={24}>
+                            <Card size="small" title="Treble" extra={<FontAwesomeIcon icon={faVolumeUp}/>}>
+                                <Row>
+                                    <Col span={24}>
+                                        <Slider
+                                            min={0}
+                                            max={14}
+                                            onChange={(tr: SliderValue) => onTrebleChange(info.zone, tr)}
+                                            value={parseInt(status.tr)}
                                         />
                                     </Col>
                                 </Row>

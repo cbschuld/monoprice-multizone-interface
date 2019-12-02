@@ -44,6 +44,24 @@ const App: React.FC = () => {
         });
     }, 500
   );
+  const [debouncedSetBass] = useDebouncedCallback(
+    (zone: string, bass: SliderValue) => {
+      axios.post('http://' + HostName + '/zones/' + zone + '/bs', pad(String(bass), 2))
+        .then(debouncedRefreshZones)
+        .catch(function (error) {
+          console.log(error);
+        });
+    }, 500
+  );
+  const [debouncedSetTreble] = useDebouncedCallback(
+    (zone: string, treble: SliderValue) => {
+      axios.post('http://' + HostName + '/zones/' + zone + '/tr', pad(String(treble), 2))
+        .then(debouncedRefreshZones)
+        .catch(function (error) {
+          console.log(error);
+        });
+    }, 500
+  );
   const [debouncedSetSource] = useDebouncedCallback(
     (zone: string, source: number) => {
       axios.post('http://' + HostName + '/zones/' + zone + '/ch', pad(String(source), 2))
@@ -81,6 +99,20 @@ const App: React.FC = () => {
       draft[draft.findIndex(z => z.zone === zone)].vo = pad(String(volume), 2);
     }));
     debouncedSetVolume(zone, volume);
+  }
+
+  const setBass = (zone: string, bass: SliderValue) => {
+    setZoneStatusList(produce(zoneStatusList, (draft: Array<ZoneStatus>) => {
+      draft[draft.findIndex(z => z.zone === zone)].bs = pad(String(bass), 2);
+    }));
+    debouncedSetBass(zone, bass);
+  }
+
+  const setTreble = (zone: string, treble: SliderValue) => {
+    setZoneStatusList(produce(zoneStatusList, (draft: Array<ZoneStatus>) => {
+      draft[draft.findIndex(z => z.zone === zone)].tr = pad(String(treble), 2);
+    }));
+    debouncedSetTreble(zone, treble);
   }
 
   const setPower = (zone: string, on: boolean) => {
@@ -200,6 +232,8 @@ const App: React.FC = () => {
                 info={zoneInfo}
                 status={getZoneStatus()}
                 onVolumeChange={(zone, vo) => { setVolume(zone, vo) }}
+                onBassChange={(zone, bs) => { setBass(zone, bs) }}
+                onTrebleChange={(zone, tr) => { setTreble(zone, tr) }}
                 onPowerChange={(zone, on) => { setPower(zone, on) }}
                 onSourceChange={(zone, ch) => { setSource(zone, ch) }}
               />
@@ -212,6 +246,8 @@ const App: React.FC = () => {
                 infoList={Zones}
                 statusList={zoneStatusList}
                 onVolumeChange={(zone, vo) => { setVolume(zone, vo) }}
+                onBassChange={(zone, bs) => { setBass(zone, bs) }}
+                onTrebleChange={(zone, tr) => { setTreble(zone, tr) }}
                 onPowerChange={(zone, on) => { setPower(zone, on) }}
                 onSourceChange={(zone, source) => { setSource(zone, parseInt(source)) }}
               />
