@@ -22,7 +22,7 @@ const { Option } = Select;
 export const ZonePowerVolumeControl: React.FC<ZonePowerVolumeControlInputProps> = ({ info, on, vo, ch, onPowerChange, onVolumeChange, onSourceChange }) => {
     const [power, setPower] = useState(on);
     const [volume, setVolume] = useState(vo);
-    const [source,setSource] = useState(ch);
+    const [source, setSource] = useState(ch);
     useEffect(() => {
         setPower(on);
         setVolume(vo);
@@ -33,10 +33,10 @@ export const ZonePowerVolumeControl: React.FC<ZonePowerVolumeControlInputProps> 
         if (SourceNames.length > 0) {
             const sourceInfo = SourceNames.find(s => parseInt(s.ch) === source);
             if (sourceInfo) {
-                return <FontAwesomeIcon fixedWidth icon={sourceInfo.icon}/>;
+                return <FontAwesomeIcon fixedWidth icon={sourceInfo.icon} />;
             }
         }
-        return <FontAwesomeIcon fixedWidth icon={faQuestion}/>;
+        return <FontAwesomeIcon fixedWidth icon={faQuestion} />;
     }
 
     return (
@@ -55,15 +55,15 @@ export const ZonePowerVolumeControl: React.FC<ZonePowerVolumeControlInputProps> 
                         labelInValue
                         disabled={!on}
                         size="small"
-                        style={{width:'48px'}}
-                        onChange={(selected:LabeledValue)=>{
-                            setSource(parseInt(selected.key));
-                            onSourceChange(info.zone,selected.key);
+                        style={{ width: '48px' }}
+                        value={{ key: source.toString(), label: getSourceIcon(), value: source.toString() }}
+                        onChange={(selected: LabeledValue) => {
+                            setSource(parseInt(selected.key || ""));
+                            onSourceChange(info.zone, selected.key || "");
                         }}
-                        value={{key:source.toString(),label:getSourceIcon()}}
                     >
-                        {SourceNames.map((s)=>{
-                            return <Option key={s.ch} value={s.ch}><FontAwesomeIcon icon={s.icon}/></Option>
+                        {SourceNames.map((s) => {
+                            return <Option key={s.ch} value={s.ch}><FontAwesomeIcon icon={s.icon} /></Option>
                         })}
                     </Select>
                     &nbsp;
