@@ -8,7 +8,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.13.0",
     "@fortawesome/react-fontawesome": "^0.1.9",
     "@types/jest": "25.2.1",
-    "@types/node": "13.13.1",
+    "@types/node": "13.13.2",
     "@types/react": "16.9.34",
     "@types/react-dom": "16.9.6",
     "antd": "^4.1.4",
@@ -18,7 +18,7 @@
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
     "typescript": "3.8.3",
-    "use-debounce": "^3.4.1"
+    "use-debounce": "^3.4.2"
   },
   "scripts": {
     "start": "react-scripts start",
