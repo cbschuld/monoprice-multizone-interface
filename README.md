@@ -33,7 +33,7 @@ npm install
 
 ### Adjust the Environment
 
-There is file in the root path called `env.sample.tsx`.  You will need to copy this file over as `env.tsx` and adjust this file to match your amplifier/controller setup before you go to the next step.  You will see in there that you can use custom icons for each zone/room.  I have included what I use in my sample image to help your setup.
+There is file in the root path called `env.sample.tsx` *(in the `src` folder)*.  You will need to copy this file over as `env.tsx` and adjust this file to match your amplifier/controller setup before you go to the next step.  You will see in there that you can use custom icons for each zone/room.  I have included what I use in my sample image to help your setup.
 
 ### Build the App
 
