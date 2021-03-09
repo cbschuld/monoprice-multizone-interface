@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { ZoneInformation, ZoneStatus } from './common/types';
 import { Card, Switch, Slider, Select } from 'antd';
 import { Row, Col } from 'antd';
-import { SliderValue } from 'antd/lib/slider';
 import { SourceNames } from './env';
 import { SourceInformation } from './common/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -12,9 +11,9 @@ import { faVolumeUp, faMicrophone } from '@fortawesome/free-solid-svg-icons';
 interface ZoneInputProps {
   info: ZoneInformation;
   status: ZoneStatus;
-  onVolumeChange: (zone: string, volume: SliderValue) => void;
-  onBassChange: (zone: string, bass: SliderValue) => void;
-  onTrebleChange: (zone: string, treble: SliderValue) => void;
+  onVolumeChange: (zone: string, volume: number) => void;
+  onBassChange: (zone: string, bass: number) => void;
+  onTrebleChange: (zone: string, treble: number) => void;
   onPowerChange: (zone: string, on: boolean) => void;
   onSourceChange: (zone: string, source: number) => void;
 }
@@ -82,8 +81,8 @@ export const Zone: React.FC<ZoneInputProps> = ({
                     <Slider
                       min={1}
                       max={38}
-                      onChange={(vo: SliderValue) => setVolume(vo as number)}
-                      onAfterChange={(vo: SliderValue) => onVolumeChange(info.zone, vo)}
+                      onChange={(vo: number) => setVolume(vo as number)}
+                      onAfterChange={(vo: number) => onVolumeChange(info.zone, vo)}
                       value={volume}
                     />
                   </Col>
@@ -99,8 +98,8 @@ export const Zone: React.FC<ZoneInputProps> = ({
                     <Slider
                       min={0}
                       max={14}
-                      onChange={(bs: SliderValue) => setBass(bs as number)}
-                      onAfterChange={(bs: SliderValue) => onBassChange(info.zone, bs)}
+                      onChange={(bs: number) => setBass(bs as number)}
+                      onAfterChange={(bs: number) => onBassChange(info.zone, bs)}
                       value={bass}
                     />
                   </Col>
@@ -116,8 +115,8 @@ export const Zone: React.FC<ZoneInputProps> = ({
                     <Slider
                       min={0}
                       max={14}
-                      onChange={(tr: SliderValue) => setTreble(tr as number)}
-                      onAfterChange={(tr: SliderValue) => onTrebleChange(info.zone, tr)}
+                      onChange={(tr: number) => setTreble(tr as number)}
+                      onAfterChange={(tr: number) => onTrebleChange(info.zone, tr)}
                       value={treble}
                     />
                   </Col>

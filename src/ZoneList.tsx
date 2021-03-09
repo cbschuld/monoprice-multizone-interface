@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import { ZoneInformation, ZoneStatus } from './common/types';
-import { SliderValue } from 'antd/lib/slider';
 import { ZonePowerVolumeControl } from './ZonePowerVolumeControl';
 
 interface ZoneListInputProps {
@@ -9,9 +8,9 @@ interface ZoneListInputProps {
   exterior: boolean;
   infoList: Array<ZoneInformation>;
   statusList: Array<ZoneStatus>;
-  onVolumeChange: (zone: string, volume: SliderValue) => void;
-  onBassChange: (zone: string, bass: SliderValue) => void;
-  onTrebleChange: (zone: string, treble: SliderValue) => void;
+  onVolumeChange: (zone: string, volume: number) => void;
+  onBassChange: (zone: string, bass: number) => void;
+  onTrebleChange: (zone: string, treble: number) => void;
   onPowerChange: (zone: string, on: boolean) => void;
   onSourceChange: (zone: string, source: string) => void;
 }

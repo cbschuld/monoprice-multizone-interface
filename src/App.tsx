@@ -10,7 +10,6 @@ import { faHome, faSun, faStar } from '@fortawesome/free-solid-svg-icons';
 import { Zone } from './Zone';
 import axios from 'axios';
 import produce from 'immer';
-import { SliderValue } from 'antd/lib/slider';
 import { useDebouncedCallback } from 'use-debounce';
 import { ZoneList } from './ZoneList';
 
@@ -23,11 +22,11 @@ const App: React.FC = () => {
   const [zoneInfo, setZoneInfo] = useState<ZoneInformation>({ label: 'All Zones', zone: '0', icon: faHome });
   const [zoneStatusList, setZoneStatusList] = useState<Array<ZoneStatus>>([]);
 
-  const [debouncedRefreshZones] = useDebouncedCallback(() => {
+  const debouncedRefreshZones = useDebouncedCallback(() => {
     refreshZones();
   }, DEBOUNCE_TIMING);
 
-  const [debouncedSetPower] = useDebouncedCallback((zone: string, on: boolean) => {
+  const debouncedSetPower = useDebouncedCallback((zone: string, on: boolean) => {
     axios
       .post('http://' + HostName + '/zones/' + zone + '/pr', on ? '01' : '00')
       .then(debouncedRefreshZones)
@@ -35,7 +34,7 @@ const App: React.FC = () => {
         console.error(error);
       });
   }, DEBOUNCE_TIMING);
-  const [debouncedSetVolume] = useDebouncedCallback((zone: string, volume: SliderValue) => {
+  const debouncedSetVolume = useDebouncedCallback((zone: string, volume: number) => {
     axios
       .post('http://' + HostName + '/zones/' + zone + '/vo', pad(String(volume), 2))
       .then(debouncedRefreshZones)
@@ -43,7 +42,7 @@ const App: React.FC = () => {
         console.error(error);
       });
   }, DEBOUNCE_TIMING);
-  const [debouncedSetBass] = useDebouncedCallback((zone: string, bass: SliderValue) => {
+  const debouncedSetBass = useDebouncedCallback((zone: string, bass: number) => {
     axios
       .post('http://' + HostName + '/zones/' + zone + '/bs', pad(String(bass), 2))
       .then(debouncedRefreshZones)
@@ -51,7 +50,7 @@ const App: React.FC = () => {
         console.error(error);
       });
   }, DEBOUNCE_TIMING);
-  const [debouncedSetTreble] = useDebouncedCallback((zone: string, treble: SliderValue) => {
+  const debouncedSetTreble = useDebouncedCallback((zone: string, treble: number) => {
     axios
       .post('http://' + HostName + '/zones/' + zone + '/tr', pad(String(treble), 2))
       .then(debouncedRefreshZones)
@@ -59,7 +58,7 @@ const App: React.FC = () => {
         console.error(error);
       });
   }, DEBOUNCE_TIMING);
-  const [debouncedSetSource] = useDebouncedCallback((zone: string, source: number) => {
+  const debouncedSetSource = useDebouncedCallback((zone: string, source: number) => {
     axios
       .post('http://' + HostName + '/zones/' + zone + '/ch', pad(String(source), 2))
       .then(debouncedRefreshZones)
@@ -92,7 +91,7 @@ const App: React.FC = () => {
     return n.length >= width ? n : new Array(width - n.length + 1).join(z.toString()) + n;
   };
 
-  const setVolume = (zone: string, volume: SliderValue) => {
+  const setVolume = (zone: string, volume: number) => {
     setZoneStatusList(
       produce(zoneStatusList, (draft: Array<ZoneStatus>) => {
         draft[draft.findIndex((z) => z.zone === zone)].vo = pad(String(volume), 2);
@@ -101,7 +100,7 @@ const App: React.FC = () => {
     debouncedSetVolume(zone, volume);
   };
 
-  const setBass = (zone: string, bass: SliderValue) => {
+  const setBass = (zone: string, bass: number) => {
     setZoneStatusList(
       produce(zoneStatusList, (draft: Array<ZoneStatus>) => {
         draft[draft.findIndex((z) => z.zone === zone)].bs = pad(String(bass), 2);
@@ -110,7 +109,7 @@ const App: React.FC = () => {
     debouncedSetBass(zone, bass);
   };
 
-  const setTreble = (zone: string, treble: SliderValue) => {
+  const setTreble = (zone: string, treble: number) => {
     setZoneStatusList(
       produce(zoneStatusList, (draft: Array<ZoneStatus>) => {
         draft[draft.findIndex((z) => z.zone === zone)].tr = pad(String(treble), 2);

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ZoneInformation } from './common/types';
 import { Row, Col, Button, Slider, Select } from 'antd';
-import { SliderValue } from 'antd/lib/slider';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { faPowerOff, faQuestion } from '@fortawesome/free-solid-svg-icons';
@@ -14,7 +13,7 @@ interface ZonePowerVolumeControlInputProps {
   vo: number;
   ch: number;
   onPowerChange: (zone: string, on: boolean) => void;
-  onVolumeChange: (zone: string, volume: SliderValue) => void;
+  onVolumeChange: (zone: string, volume: number) => void;
   onSourceChange: (zone: string, source: string) => void;
 }
 const { Option } = Select;
@@ -89,10 +88,10 @@ export const ZonePowerVolumeControl: React.FC<ZonePowerVolumeControlInputProps> 
         <Slider
           min={1}
           max={38}
-          onChange={(vo: SliderValue) => {
+          onChange={(vo: number) => {
             setVolume(parseInt(vo.toString()));
           }}
-          onAfterChange={(vo: SliderValue) => {
+          onAfterChange={(vo: number) => {
             console.log('changed to: '+volume);
             onVolumeChange(info.zone, volume);
           }}
